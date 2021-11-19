@@ -19,7 +19,7 @@ sa.close()
 ```shell
  SensorsAnalyticsSDK 1.10.3
 ```
-- env
+- _**env**_
 ```shell
 export logdir=/boom_analysis/sensors/data/
 # default value is </boom_analysis/sensors/data/>
