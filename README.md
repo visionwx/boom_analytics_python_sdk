@@ -21,7 +21,7 @@ sa.close()
 ```
 - **_env_**
 ```shell
-export logdir=/boom_analysis/sensors/data/
+export sensors_log_dir=/boom_analysis/sensors/data/
 # default value is </boom_analysis/sensors/data/>
 ```
 
