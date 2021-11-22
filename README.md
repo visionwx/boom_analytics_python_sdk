@@ -53,5 +53,5 @@ export segment_write_key="4miViANb06lgSGwlBGdoZBvCd0tNtgj0"  # prod
 
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk@v0.0.3
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.3
 ```
