@@ -1,6 +1,7 @@
 # boom_analytics_python_sdk
 
 ## Sensors Data
+[https://manual.sensorsdata.cn/sa/latest/tech_sdk_server_python-1573931.html](https://manual.sensorsdata.cn/sa/latest/tech_sdk_server_python-1573931.html)
 - _**usage**_
 ```python
 from boom_analytics import Sensors
@@ -26,6 +27,7 @@ export sensors_log_dir=/boom_analysis/sensors/data/
 ```
 
 ## Segment
+[https://segment.com/docs/connections/sources/catalog/libraries/server/python/](https://segment.com/docs/connections/sources/catalog/libraries/server/python/)
 - **_usage_**
 ```python
 from boom_analytics import Segment
