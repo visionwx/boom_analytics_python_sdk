@@ -1,1 +1,3 @@
 SensorsAnalyticsSDK~=1.10.3
+analytics-python==1.4.0
+setuptools~=58.0.4
