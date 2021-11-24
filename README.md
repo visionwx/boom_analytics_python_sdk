@@ -51,7 +51,26 @@ export segment_write_key="Q5Ya2TEmuHDDIiutffY2qBtCgHBqZprm"  # test
 export segment_write_key="4miViANb06lgSGwlBGdoZBvCd0tNtgj0"  # prod
 ```
 
+## Logger
+- **_usage_**
+```python
+from boom_analytics import MyLogger
+import os
+
+LOGGER = MyLogger(
+    logTcpHost=os.environ.get('logger_host'),
+    logTcpPort=os.environ.get('logger_tcp'),
+    loggerName='boom_authentication',
+    extra={
+        'applicationName': 'boom_authentication',
+        'version': '<image_version>'
+    }
+)
+
+LOGGER.info("测试一下", __name__, extra={})
+```
+
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.3
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.4
 ```
