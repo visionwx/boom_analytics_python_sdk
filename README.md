@@ -35,10 +35,25 @@ import datetime
 
 segment = Segment.get_segment_analytics()
 
+def general_attr(user_id=None, user_name=None, phone=None):
+    return {
+        'platform': {
+            'name': 'server',
+            'version': '<image_version>'
+        },
+        'user_info': {
+            'name': user_name,
+            'id': user_id,
+            'phone': phone
+        }
+    }
+
 segment.identify('f4ca124298', {
     'name': 'Michael Bolton',
     'email': 'mbolton@example.com',
-    'created_at': datetime.datetime.now()
+    'created_at': datetime.datetime.now(),
+    # 通用属性
+    'general_attr': general_attr(user_name="xx", user_id="xx", phone="xx")
 })
 ```
 - **_dependencies_**
