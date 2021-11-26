@@ -91,26 +91,35 @@ class MyLogger:
 
         return logger
 
-    def info(self, logContent, tag, extra={}):
+    def info(self, logContent, tag, trace_id=None, extra=None):
+        if extra is None:
+            extra = {}
         content = "[" + tag + "] " + logContent
         extra.update(self.extra)
         extra.update({'logger_name': tag})
+        extra.update({'trace_id': trace_id})
         self.logger.info(content, extra=extra)
         self.logCounter += 1
         return True
 
-    def warning(self, logContent, tag, extra={}):
+    def warning(self, logContent, tag, trace_id=None, extra=None):
+        if extra is None:
+            extra = {}
         content = "[" + tag + "] " + logContent
         extra.update(self.extra)
         extra.update({'logger_name': tag})
+        extra.update({'trace_id': trace_id})
         self.logger.warning(content, extra=extra)
         self.logCounter += 1
         return True
 
-    def error(self, logContent, tag, extra={}):
+    def error(self, logContent, tag, trace_id=None, extra=None):
+        if extra is None:
+            extra = {}
         content = "[" + tag + "] " + logContent
         extra.update(self.extra)
         extra.update({'logger_name': tag})
+        extra.update({'trace_id': trace_id})
         self.logger.error(content, extra=extra)
         self.logCounter += 1
         return True

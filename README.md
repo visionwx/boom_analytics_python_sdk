@@ -55,6 +55,7 @@ export segment_write_key="4miViANb06lgSGwlBGdoZBvCd0tNtgj0"  # prod
 - **_usage_**
 ```python
 from boom_analytics import MyLogger
+from flask import g
 import os
 
 LOGGER = MyLogger(
@@ -67,10 +68,28 @@ LOGGER = MyLogger(
     }
 )
 
-LOGGER.info("测试一下", __name__, extra={})
+LOGGER.info("测试日志", __name__, g.trace_id, extra={})
+```
+- **_trace_**
+```python
+from boom_analytics import trace_id
+
+from flask import Flask, request, g
+
+app = Flask(__name__)
+
+@app.before_request
+def before_req():
+    g.trace_id = request.headers.get('trace_id', trace_id())
+
+##add trace_id before request 
+import requests
+url = "..."
+headers = {'trace_id': g.trace_id}
+requests.get(url, headers=headers)
 ```
 
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.4
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.5
 ```

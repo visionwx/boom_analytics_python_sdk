@@ -15,4 +15,4 @@ if __name__ == '__main__':
         }
     )
 
-    LOGGER.info("测试一下", __name__)
+    LOGGER.info("测试一下", __name__, "b7498cc8911b413d88ecbbde8da93a0f")
