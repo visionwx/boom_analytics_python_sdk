@@ -81,6 +81,10 @@ app = Flask(__name__)
 @app.before_request
 def before_req():
     g.trace_id = request.headers.get('trace_id', trace_id())
+    
+@app.after_request
+def after_req(response):
+    response.headers["trace_id"] = g.trace_id
 
 ##add trace_id before request 
 import requests
