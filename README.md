@@ -85,6 +85,7 @@ def before_req():
 @app.after_request
 def after_req(response):
     response.headers["trace_id"] = g.trace_id
+    return response
 
 ##add trace_id before request 
 import requests
