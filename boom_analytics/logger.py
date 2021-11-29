@@ -102,7 +102,7 @@ class MyLogger:
         trace_id = None
         if flask.has_request_context():
             try:
-                self.trace_id = flask.g.trace_id
+                trace_id = flask.g.trace_id
             except:
                 pass
         extra.update({'trace_id': trace_id})
