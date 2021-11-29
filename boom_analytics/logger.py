@@ -3,7 +3,7 @@ import os
 import sys
 import logging
 import logging.handlers
-
+import flask
 from logging.handlers import SocketHandler
 from . import formatter
 
@@ -43,6 +43,7 @@ class MyLogger:
         self.logTcpPort = logTcpPort
         self.logger = self.initLogger()
         self.extra = extra
+
 
     def initLogFolder(self):
         if self.logFilePath is None:
@@ -91,35 +92,59 @@ class MyLogger:
 
         return logger
 
-    def info(self, logContent, tag, trace_id=None, extra=None):
+    def info(self, logContent, tag, extra=None):
         if extra is None:
             extra = {}
         content = "[" + tag + "] " + logContent
         extra.update(self.extra)
         extra.update({'logger_name': tag})
+
+        trace_id = None
+        if flask.has_request_context():
+            try:
+                self.trace_id = flask.g.trace_id
+            except:
+                pass
         extra.update({'trace_id': trace_id})
+
         self.logger.info(content, extra=extra)
         self.logCounter += 1
         return True
 
-    def warning(self, logContent, tag, trace_id=None, extra=None):
+    def warning(self, logContent, tag, extra=None):
         if extra is None:
             extra = {}
         content = "[" + tag + "] " + logContent
         extra.update(self.extra)
         extra.update({'logger_name': tag})
+
+        trace_id = None
+        if flask.has_request_context():
+            try:
+                self.trace_id = flask.g.trace_id
+            except:
+                pass
         extra.update({'trace_id': trace_id})
+        
         self.logger.warning(content, extra=extra)
         self.logCounter += 1
         return True
 
-    def error(self, logContent, tag, trace_id=None, extra=None):
+    def error(self, logContent, tag, extra=None):
         if extra is None:
             extra = {}
         content = "[" + tag + "] " + logContent
         extra.update(self.extra)
         extra.update({'logger_name': tag})
+
+        trace_id = None
+        if flask.has_request_context():
+            try:
+                self.trace_id = flask.g.trace_id
+            except:
+                pass
         extra.update({'trace_id': trace_id})
+        
         self.logger.error(content, extra=extra)
         self.logCounter += 1
         return True

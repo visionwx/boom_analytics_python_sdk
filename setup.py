@@ -23,7 +23,7 @@ setup(
     packages=['boom_analytics'],
     include_package_data=True,
     python_requires=">=3.7.*",
-    install_requires=['SensorsAnalyticsSDK', 'analytics-python'],
+    install_requires=['SensorsAnalyticsSDK', 'analytics-python', 'flask'],
     zip_safe=False,
     keywords='boom analytics'
 )
