@@ -83,7 +83,7 @@ LOGGER = MyLogger(
     }
 )
 
-LOGGER.info("测试日志", __name__, g.trace_id, extra={})
+LOGGER.info("测试日志", __name__, extra={})
 ```
 - **_trace_**
 ```python
@@ -111,5 +111,5 @@ requests.get(url, headers=headers)
 
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.5
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.6
 ```
