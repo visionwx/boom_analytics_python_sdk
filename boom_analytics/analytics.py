@@ -17,15 +17,14 @@ class Analytics(object):
             sensorsdata2015jssdkcross = flask.request.cookies.get('sensorsdata2015jssdkcross', '')
             sensor_distinct_id = cls._get_distinct_id(sensorsdata2015jssdkcross)
 
-        if ajs_anonymous_id:
-            Segment.get_segment_analytics().track(user_id, event, properties, anonymous_id=ajs_anonymous_id)
-        else:
-            Segment.get_segment_analytics().track(user_id, event, properties)
-
-        if user_id:
+        if user_id and user_id != '':
             Sensors.get_sensors_analytics().track(user_id, event, properties, is_login_id=True)
+            Segment.get_segment_analytics().track(user_id, event, properties)
         else:
-            Sensors.get_sensors_analytics().track(sensor_distinct_id, event, properties, is_login_id=False)
+            if sensor_distinct_id:
+                Sensors.get_sensors_analytics().track(sensor_distinct_id, event, properties, is_login_id=False)
+            if ajs_anonymous_id:
+                Segment.get_segment_analytics().track(event=event, properties=properties, anonymous_id=ajs_anonymous_id)
 
         Sensors.flush()
 
