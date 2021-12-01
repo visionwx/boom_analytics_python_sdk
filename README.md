@@ -1,5 +1,19 @@
 # boom_analytics_python_sdk
 
+## Analytics
+```python
+from boom_analytics import Analytics
+
+# 在项目启动时设置
+Analytics.set_module_name('<module_name>')
+
+Analytics.track('<user_id>', '<event_name>', {})
+```
+#### env
+- `export sensors_log_dir=/boom_analysis/sensors/data/`
+- `export segment_write_key="Q5Ya2TEmuHDDIiutffY2qBtCgHBqZprm"` # test env
+
+
 ## Sensors Data
 [https://manual.sensorsdata.cn/sa/latest/tech_sdk_server_python-1573931.html](https://manual.sensorsdata.cn/sa/latest/tech_sdk_server_python-1573931.html)
 - _**usage**_
@@ -111,5 +125,5 @@ requests.get(url, headers=headers)
 
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.8
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.0.9
 ```
