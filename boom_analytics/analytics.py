@@ -23,8 +23,12 @@ class Analytics(object):
         else:
             if sensor_distinct_id:
                 Sensors.get_sensors_analytics().track(sensor_distinct_id, event, properties, is_login_id=False)
+            else:
+                Sensors.get_sensors_analytics().track('undefined', event, properties, is_login_id=False)
             if ajs_anonymous_id:
                 Segment.get_segment_analytics().track(event=event, properties=properties, anonymous_id=ajs_anonymous_id)
+            else:
+                Segment.get_segment_analytics().track(event=event, properties=properties, anonymous_id='undefined')
 
         Sensors.flush()
 
