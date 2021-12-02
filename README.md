@@ -7,7 +7,16 @@ from boom_analytics import Analytics
 # 在项目启动时设置
 Analytics.set_module_name('<module_name>')
 
-Analytics.track('<user_id>', '<event_name>', {})
+Analytics.track('<user_id>', '<event_name>', {...})
+
+#无法获取userid的情况
+Analytics.track(event='<event>', properties={
+    'key1': 'value1',
+    'key2': 'value2',
+    'general_attr': { # 事件参数中，只有general_attr可以是字典，其他的必须是一维数据
+        ...
+    }
+})
 ```
 #### env
 - `export sensors_log_dir=/boom_analysis/sensors/data/`
