@@ -15,7 +15,7 @@ class Analytics(object):
         if flask.has_request_context():
             ajs_anonymous_id = flask.request.cookies.get('ajs_anonymous_id')
             sensorsdata2015jssdkcross = flask.request.cookies.get('sensorsdata2015jssdkcross', '')
-            sensor_distinct_id = cls._get_distinct_id(sensorsdata2015jssdkcross)
+            sensor_distinct_id = cls.get_distinct_id(sensorsdata2015jssdkcross)
 
         if user_id and user_id != '':
             Segment.get_segment_analytics().track(user_id, event, properties)
@@ -39,10 +39,10 @@ class Analytics(object):
         Sensors.flush()
 
     @classmethod
-    def _get_distinct_id(cls, cross):
+    def get_distinct_id(cls, cross):
         try:
             cross_str = parse.unquote(cross)
-            cross_dict = json.dumps(cross_str)
+            cross_dict = json.loads(cross_str)
             return cross_dict.get('distinct_id', None)
         except:
             return None

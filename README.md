@@ -134,5 +134,5 @@ requests.get(url, headers=headers)
 
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.1.1
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.1.2
 ```
