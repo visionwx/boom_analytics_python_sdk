@@ -11,11 +11,10 @@ class Analytics(object):
     @classmethod
     def track(cls, user_id=None, event=None, properties=None):
         ajs_anonymous_id = None
-        sensor_distinct_id = None
+        sensors_distinct_id = None
         if flask.has_request_context():
-            ajs_anonymous_id = flask.request.cookies.get('ajs_anonymous_id')
-            sensorsdata2015jssdkcross = flask.request.cookies.get('sensorsdata2015jssdkcross', '')
-            sensor_distinct_id = cls.get_distinct_id(sensorsdata2015jssdkcross)
+            ajs_anonymous_id = flask.request.headers.get('ajs_anonymous_id', '')
+            sensors_distinct_id = flask.request.headers.get('sensors_distinct_id', '')
 
         if user_id and user_id != '':
             Segment.get_segment_analytics().track(user_id, event, properties)
@@ -31,8 +30,8 @@ class Analytics(object):
             if properties and 'general_attr' in properties:
                 properties.pop('general_attr')
 
-            if sensor_distinct_id:
-                Sensors.get_sensors_analytics().track(sensor_distinct_id, event, properties, is_login_id=False)
+            if sensors_distinct_id:
+                Sensors.get_sensors_analytics().track(sensors_distinct_id, event, properties, is_login_id=False)
             else:
                 Sensors.get_sensors_analytics().track('undefined', event, properties, is_login_id=False)
 

@@ -1,6 +1,6 @@
 __title__ = 'boom_analytics'
 __description__ = 'boom analytics package'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 __author__ = 'Lawrence'
 __author_email__ = 'lawrence.deng@visionwx.com'
 __url__ = 'https://www.visionwx.com'
