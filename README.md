@@ -5,7 +5,8 @@
 from boom_analytics import Analytics
 
 # 在项目启动时设置
-Analytics.set_module_name('<module_name>')
+Analytics.set_module_name('<module_name>', '<sensors_log_dir>')
+Analytics.set_segment_write_key('<segment_write_key>')
 
 Analytics.track('<user_id>', '<event_name>', {...})
 
@@ -134,5 +135,5 @@ requests.get(url, headers=headers)
 
 ## Download
 ```shell
-pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.1.3
+pip install git+https://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@github.com/visionwx/boom_analytics_python_sdk.git@v0.1.4
 ```
