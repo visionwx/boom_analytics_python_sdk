@@ -1,20 +1,21 @@
 import analytics
 
-from boom_analytics.util import getEnvPara
-
 
 class Segment(object):
 
     _instance = None
+    _write_key = None
     _segment_analytics = analytics
-    _write_key = getEnvPara('segment_write_key')
 
-    def __init__(self):
-        pass
+    # def __init__(self):
+    #     pass
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls, segment_write_key: str, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = object.__new__(cls, *args, **kwargs)
+            if segment_write_key is None:
+                raise Exception("segment_write_key is None")
+            cls._instance = object.__new__(cls)
+            cls._write_key = segment_write_key
         return cls._instance
 
     @classmethod

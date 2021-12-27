@@ -1,22 +1,24 @@
 import os
 import sensorsanalytics
 
-from boom_analytics.util import getEnvPara
-
 
 class Sensors(object):
 
     _instance = None
     _sensors_analytics = None
-    _log_dir = getEnvPara('sensors_log_dir', '/boom_analysis/sensors/data/')
+    _log_dir = None
 
-    def __init__(self, module_name: str):
-        consumer = sensorsanalytics.ConcurrentLoggingConsumer(os.path.join(self._log_dir, module_name))
-        Sensors._sensors_analytics = sensorsanalytics.SensorsAnalytics(consumer)
+    # def __init__(self, module_name: str):
+    #     pass
 
-    def __new__(cls, module_name: str, *args, **kwargs):
+    def __new__(cls, module_name: str, sensors_log_dir: str, *args, **kwargs):
         if cls._instance is None:
-            cls._instance = object.__new__(cls, *args, **kwargs)
+            if sensors_log_dir is None:
+                raise Exception("sensors_log_dir is None")
+            cls._instance = object.__new__(cls)
+            cls._log_dir = sensors_log_dir
+            consumer = sensorsanalytics.ConcurrentLoggingConsumer(os.path.join(cls._log_dir, module_name))
+            Sensors._sensors_analytics = sensorsanalytics.SensorsAnalytics(consumer)
         return cls._instance
 
     @classmethod

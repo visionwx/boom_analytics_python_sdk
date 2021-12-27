@@ -47,8 +47,12 @@ class Analytics(object):
             return None
 
     @classmethod
-    def set_module_name(cls, name):
-        Sensors(name)
+    def set_module_name(cls, name, sensorsLogDir):
+        Sensors(name, sensorsLogDir)
+
+    @classmethod
+    def set_segment_write_key(cls, key):
+        Segment(**{'segment_write_key': key})
 
 
 
