@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import re
 import sys
 import logging
 import logging.handlers
@@ -32,7 +33,7 @@ class TCPLogstashHandler(SocketHandler):
 class MyLogger:
     def __init__(self, logToConsole=True, logFilePath=None,
                  logTcpHost=None, logTcpPort=None, extra={},
-                 loggerName="LOGGER", maxBytes=1024 * 1024, backupCount=5):
+                 loggerName="LOGGER", maxBytes=1024 * 1024 * 200, backupCount=30):
         self.logToConsole = logToConsole
         self.logFilePath = logFilePath
         self.logCounter = 0
@@ -62,14 +63,29 @@ class MyLogger:
             '%(asctime)s %(levelname)-8s: %(message)s')
 
         # 文件日志, 定义一个RotatingFileHandler，
-        # 最多备份5个日志文件，每个日志文件最大10M
+        # 最多备份30天个日志文件，每个日志文件最大200M
         if self.logFilePath is not None:
             # 检查log folder
             self.initLogFolder()
-            fileHandler = logging.handlers.RotatingFileHandler(
-                self.logFilePath,
-                maxBytes=self.maxBytes,
+            # fileHandler = logging.handlers.RotatingFileHandler(
+            #     self.logFilePath,
+            #     maxBytes=self.maxBytes,
+            #     backupCount=self.backupCount)
+            
+            
+            # interval 滚动周期，
+            # when="MIDNIGHT", interval=1 表示每天0点为更新点，每天生成一个文件
+            # backupCount  表示日志保存个数
+            fileHandler = logging.handlers.TimedRotatingFileHandler(
+                filename=self.logFilePath,
+                when='MIDNIGHT',
+                interval=1,
                 backupCount=self.backupCount)
+            # filename="mylog" suffix设置，会生成文件名为mylog.2020-02-25.log
+            fileHandler.suffix = "%Y-%m-%d.log"
+            # extMatch是编译好正则表达式，用于匹配日志文件名后缀
+            # 需要注意的是suffix和extMatch一定要匹配的上，如果不匹配，过期日志不会被删除。
+            fileHandler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}.log$")
             fileHandler.setFormatter(formatter)
             logger.addHandler(fileHandler)
 
