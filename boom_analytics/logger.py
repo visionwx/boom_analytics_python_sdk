@@ -82,10 +82,11 @@ class MyLogger:
                 interval=1,
                 backupCount=self.backupCount)
             # filename="mylog" suffix设置，会生成文件名为mylog.2020-02-25.log
-            fileHandler.suffix = "%Y-%m-%d.log"
+            # fileHandler.suffix = "%Y-%m-%d.log"
+            fileHandler.suffix = "%Y-%m-%d"
             # extMatch是编译好正则表达式，用于匹配日志文件名后缀
             # 需要注意的是suffix和extMatch一定要匹配的上，如果不匹配，过期日志不会被删除。
-            fileHandler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}.log$")
+            fileHandler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}$")
             fileHandler.setFormatter(formatter)
             logger.addHandler(fileHandler)
 
