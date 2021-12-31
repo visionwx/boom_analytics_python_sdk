@@ -13,4 +13,4 @@ if __name__ == '__main__':
         }
     )
 
-    LOGGER.info("测试一下", __name__)
+    LOGGER.info("测试中文", __name__, extra={"userId": "123123123"})
