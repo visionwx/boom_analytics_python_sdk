@@ -5,7 +5,7 @@ import sys
 import logging
 import logging.handlers
 import flask
-from logging.handlers import SocketHandler
+from logging.handlers import SocketHandler, TimedRotatingFileHandler
 from . import formatter
 
 
@@ -59,19 +59,14 @@ class MyLogger:
         logger = logging.getLogger(self.loggerName)
 
         # 指定logger输出格式
-        formatter = logging.Formatter(
-            '%(asctime)s %(levelname)-8s: %(message)s')
+        json_formatter = formatter.LogstashFormatterVersion1()
+
 
         # 文件日志, 定义一个RotatingFileHandler，
         # 最多备份30天个日志文件，每个日志文件最大200M
         if self.logFilePath is not None:
             # 检查log folder
             self.initLogFolder()
-            # fileHandler = logging.handlers.RotatingFileHandler(
-            #     self.logFilePath,
-            #     maxBytes=self.maxBytes,
-            #     backupCount=self.backupCount)
-            
             
             # interval 滚动周期，
             # when="MIDNIGHT", interval=1 表示每天0点为更新点，每天生成一个文件
@@ -80,20 +75,22 @@ class MyLogger:
                 filename=self.logFilePath,
                 when='MIDNIGHT',
                 interval=1,
-                backupCount=self.backupCount)
+                backupCount=self.backupCount
+            )
+
             # filename="mylog" suffix设置，会生成文件名为mylog.2020-02-25.log
             # fileHandler.suffix = "%Y-%m-%d.log"
             fileHandler.suffix = "%Y-%m-%d"
             # extMatch是编译好正则表达式，用于匹配日志文件名后缀
             # 需要注意的是suffix和extMatch一定要匹配的上，如果不匹配，过期日志不会被删除。
             fileHandler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-            fileHandler.setFormatter(formatter)
+            fileHandler.setFormatter(json_formatter)
             logger.addHandler(fileHandler)
 
         # 控制台日志
         if self.logToConsole:
             consoleHandler = logging.StreamHandler(sys.stdout)
-            consoleHandler.formatter = formatter
+            # consoleHandler.formatter = json_formatter
             logger.addHandler(consoleHandler)
 
         # tcp日志服务器
