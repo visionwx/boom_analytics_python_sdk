@@ -12,9 +12,13 @@ class Analytics(object):
     def track(cls, user_id=None, event=None, properties=None):
         ajs_anonymous_id = None
         sensors_distinct_id = None
+        boom_platform_type = None
+        boom_platform_version = None
         if flask.has_request_context():
             ajs_anonymous_id = flask.request.headers.get('ajs_anonymous_id', '')
             sensors_distinct_id = flask.request.headers.get('sensors_distinct_id', '')
+            boom_platform_type = flask.request.headers.get('boom_platform_type', '')
+            boom_platform_version = flask.request.headers.get('boom_platform_version', '')
 
         if user_id and user_id != '':
             Segment.get_segment_analytics().track(user_id, event, properties)
@@ -29,6 +33,8 @@ class Analytics(object):
 
             if properties and 'general_attr' in properties:
                 properties.pop('general_attr')
+            properties['platform_type'] = boom_platform_type
+            properties['platform_version'] = boom_platform_version
 
             if sensors_distinct_id:
                 Sensors.get_sensors_analytics().track(sensors_distinct_id, event, properties, is_login_id=False)
