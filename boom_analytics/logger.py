@@ -30,6 +30,16 @@ class TCPLogstashHandler(SocketHandler):
         return str.encode(self.formatter.format(record)) + b'\n'
 
 
+def catch_exception(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            print(e)
+            print("Logger error")
+    return wrapper
+
+
 class MyLogger:
     def __init__(self, logToConsole=True, logFilePath=None,
                  logTcpHost=None, logTcpPort=None, extra={},
@@ -45,7 +55,6 @@ class MyLogger:
         self.logger = self.initLogger()
         self.extra = extra
 
-
     def initLogFolder(self):
         if self.logFilePath is None:
             return
@@ -60,7 +69,6 @@ class MyLogger:
 
         # 指定logger输出格式
         json_formatter = formatter.LogstashFormatterVersion1()
-
 
         # 文件日志, 定义一个RotatingFileHandler，
         # 最多备份30天个日志文件，每个日志文件最大200M
@@ -106,6 +114,7 @@ class MyLogger:
 
         return logger
 
+    @catch_exception
     def info(self, logContent, tag, extra=None):
         if extra is None:
             extra = {}
@@ -125,6 +134,7 @@ class MyLogger:
         self.logCounter += 1
         return True
 
+    @catch_exception
     def warning(self, logContent, tag, extra=None):
         if extra is None:
             extra = {}
@@ -144,6 +154,7 @@ class MyLogger:
         self.logCounter += 1
         return True
 
+    @catch_exception
     def error(self, logContent, tag, extra=None):
         if extra is None:
             extra = {}

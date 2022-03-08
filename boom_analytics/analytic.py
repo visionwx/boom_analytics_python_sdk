@@ -21,7 +21,7 @@ class Analytics(object):
             boom_platform_version = flask.request.headers.get('boom_platform_version', '')
 
         if user_id and user_id != '':
-            Segment.get_segment_analytics().track(user_id, event, properties)
+            Segment.get_segment_analytics().track(user_id, event, properties, anonymous_id=ajs_anonymous_id)
             if properties and 'general_attr' in properties:
                 properties.pop('general_attr')
             Sensors.get_sensors_analytics().track(user_id, event, properties, is_login_id=True)
